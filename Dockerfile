@@ -3,8 +3,8 @@ FROM alpine:3.11 as builder
 LABEL maintainer1="Adam <adam@anope.org>" \
       maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
 
-ARG VERSION=insp3
-ARG CONFIGUREARGS=
+ARG VERSION=v3.9.0
+ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp --enable-extras="
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
 
@@ -31,7 +31,6 @@ RUN ./configure --prefix /inspircd --uid 10000 --gid 10000
 RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
-## Wipe out vanilla config; entrypoint.sh will handle repopulating it at runtime
 RUN rm -rf /inspircd/conf/*
 
 # Stage 1: Create optimized runtime container
