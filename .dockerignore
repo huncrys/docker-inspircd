@@ -1,5 +1,0 @@
-tests/
-version.sh
-.travis.yml
-.gitignore
-*.md
