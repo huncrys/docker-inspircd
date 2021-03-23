@@ -1,8 +1,5 @@
 FROM alpine:3.11 as builder
 
-LABEL maintainer1="Adam <adam@anope.org>" \
-      maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
-
 ARG VERSION=v3.9.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES=
