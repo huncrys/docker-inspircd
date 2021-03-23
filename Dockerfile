@@ -4,7 +4,7 @@ LABEL maintainer1="Adam <adam@anope.org>" \
       maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
 
 ARG VERSION=v3.9.0
-ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp --enable-extras="
+ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
 
@@ -31,8 +31,6 @@ RUN ./configure --prefix /inspircd --uid 10000 --gid 10000
 RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
-RUN rm -rf /inspircd/conf/*
-
 # Stage 1: Create optimized runtime container
 FROM alpine:3.11
 
@@ -42,7 +40,6 @@ RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES &&
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-COPY --chown=inspircd:inspircd conf/ /conf/
 COPY --chown=inspircd:inspircd entrypoint.sh /entrypoint.sh
 COPY --from=builder --chown=inspircd:inspircd /inspircd/ /inspircd/
 
