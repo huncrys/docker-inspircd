@@ -30,7 +30,7 @@ FROM alpine:3.13
 
 ARG RUN_DEPENDENCIES=
 
-RUN apk add --no-cache libgcc libstdc++ gnutls sqlite-libs pcre argon2-libs re2 libmaxminddb $RUN_DEPENDENCIES && \
+RUN apk add --no-cache libgcc libstdc++ gnutls sqlite-libs pcre argon2-libs re2 libmaxminddb curl $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
