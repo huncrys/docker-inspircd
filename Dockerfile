@@ -1,6 +1,6 @@
-FROM alpine:3.16 as builder
+FROM alpine:3.17 as builder
 
-ARG VERSION=v3.13.0
+ARG VERSION=v3.15.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
@@ -8,7 +8,7 @@ ARG BUILD_DEPENDENCIES=
 # Stage 0: Build from source
 RUN apk add --no-cache gcc g++ make git pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
-       perl-libwww wget gnutls-dev sqlite-dev pcre-dev argon2-dev re2-dev libmaxminddb-dev $BUILD_DEPENDENCIES
+       perl-libwww wget gnutls-dev sqlite-dev pcre-dev pcre2-dev argon2-dev re2-dev libmaxminddb-dev $BUILD_DEPENDENCIES
 
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
@@ -26,11 +26,11 @@ RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 # Stage 1: Create optimized runtime container
-FROM alpine:3.16
+FROM alpine:3.17
 
 ARG RUN_DEPENDENCIES=
 
-RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils sqlite-libs pcre argon2-libs re2 libmaxminddb curl $RUN_DEPENDENCIES && \
+RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils sqlite-libs pcre pcre2 argon2-libs re2 libmaxminddb curl $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
