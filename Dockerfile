@@ -1,6 +1,6 @@
 FROM alpine:3.17.3 as builder
 
-ARG VERSION=v3.15.0
+ARG VERSION=v3.16.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
