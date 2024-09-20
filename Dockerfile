@@ -1,6 +1,6 @@
-FROM alpine:3.20.2 AS builder
+FROM alpine:3.20.3 AS builder
 
-ARG VERSION=v3.17.1
+ARG VERSION=v4.3.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
@@ -26,7 +26,7 @@ RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 # Stage 1: Create optimized runtime container
-FROM alpine:3.20.2
+FROM alpine:3.20.3
 
 ARG RUN_DEPENDENCIES=
 
