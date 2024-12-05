@@ -2,7 +2,7 @@ FROM alpine:3.20.3 AS base
 
 FROM base AS builder
 
-ARG VERSION=v4.3.0
+ARG VERSION=v4.4.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES="cve_2024_39844 protoctl"
 ARG BUILD_DEPENDENCIES=
