@@ -10,7 +10,7 @@ ARG BUILD_DEPENDENCIES=
 # Stage 0: Build from source
 RUN apk add --no-cache gcc g++ make git pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
-       perl-libwww wget gnutls-dev sqlite-dev pcre2-dev argon2-dev re2-dev libmaxminddb-dev $BUILD_DEPENDENCIES
+       perl-libwww wget gnutls-dev openssl-dev sqlite-dev pcre2-dev argon2-dev re2-dev libmaxminddb-dev $BUILD_DEPENDENCIES
 
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
@@ -32,7 +32,7 @@ FROM base
 
 ARG RUN_DEPENDENCIES=
 
-RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils sqlite-libs pcre2 argon2-libs re2 libmaxminddb curl $RUN_DEPENDENCIES && \
+RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils openssl libssl3 sqlite-libs pcre2 argon2-libs re2 libmaxminddb curl $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
