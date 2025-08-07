@@ -2,23 +2,22 @@ FROM alpine:3.22 AS base
 
 FROM base AS builder
 
-ARG VERSION=v4.7.0
+ARG VERSION=v4.8.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES="cve_2024_39844 protoctl"
 ARG BUILD_DEPENDENCIES=
 
 # Stage 0: Build from source
-RUN apk add --no-cache gcc g++ make git pkgconfig perl \
+RUN apk add --no-cache gcc g++ make pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
        perl-libwww wget gnutls-dev openssl-dev sqlite-dev pcre2-dev argon2-dev re2-dev libmaxminddb-dev $BUILD_DEPENDENCIES
 
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-RUN git clone https://github.com/inspircd/inspircd.git inspircd-src
+ADD https://github.com/inspircd/inspircd.git#${VERSION} /inspircd-src
 
 WORKDIR /inspircd-src
-RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## Add modules
 RUN echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install
