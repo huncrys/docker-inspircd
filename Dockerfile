@@ -1,8 +1,9 @@
-FROM alpine:3.22 AS base
+FROM alpine:3.22@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412 AS base
 
 FROM base AS builder
 
-ARG VERSION=v4.8.0
+# renovate: datasource=github-tags depName=inspircd/inspircd
+ARG INSPIRCD_VERSION=v4.8.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES="cve_2024_39844 protoctl"
 ARG BUILD_DEPENDENCIES=
@@ -15,7 +16,7 @@ RUN apk add --no-cache gcc g++ make pkgconfig perl \
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-ADD https://github.com/inspircd/inspircd.git#${VERSION} /inspircd-src
+ADD https://github.com/inspircd/inspircd.git#${INSPIRCD_VERSION} /inspircd-src
 
 WORKDIR /inspircd-src
 
