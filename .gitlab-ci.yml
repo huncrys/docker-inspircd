@@ -2,6 +2,6 @@ variables:
   CI_DOCKERHUB_IMAGE: huncrys/inspircd
 
 include:
-  - component: $CI_SERVER_FQDN/oaklab/ci-templates/oci-publish@8
+  - component: $CI_SERVER_FQDN/oaklab/ci-templates/oci-publish@10
     inputs:
       licenses: GPL-2.0
