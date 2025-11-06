@@ -3,5 +3,8 @@
   "extends": [
     "config:recommended",
     "customManagers:dockerfileVersions"
+  ],
+  "reviewers": [
+    "crys"
   ]
 }
