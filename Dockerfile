@@ -3,7 +3,7 @@ FROM alpine:3.23@sha256:51183f2cfa6320055da30872f211093f9ff1d3cf06f39a0bdb212314
 FROM base AS builder
 
 # renovate: datasource=github-tags depName=inspircd/inspircd
-ARG INSPIRCD_VERSION=v4.8.0
+ARG INSPIRCD_VERSION=v4.9.0
 ARG CONFIGUREARGS="--enable-extras=m_sslrehashsignal.cpp"
 ARG EXTRASMODULES="cve_2024_39844 protoctl"
 ARG BUILD_DEPENDENCIES=
