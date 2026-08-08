@@ -1,7 +1,17 @@
+spec:
+  inputs:
+    no-cache:
+      type: boolean
+      default: false
+      description: Whether to disable the build cache when building the image.
+---
 variables:
   CI_DOCKERHUB_IMAGE: huncrys/inspircd
 
 include:
+  - component: $CI_SERVER_FQDN/oaklab/ci-templates/hadolint@12
   - component: $CI_SERVER_FQDN/oaklab/ci-templates/oci-publish@12
     inputs:
       licenses: GPL-2.0
+      registry-cache: true
+      no-cache: $[[ inputs.no-cache ]]
